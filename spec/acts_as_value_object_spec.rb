@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
-describe "ActsAsValueObject" do
-  it "fails" do
-    should.flunk "hey buddy, you should probably rename this file and start specing for real"
+describe "acts_as_value_object" do
+  class Chicken < ActiveRecord::Base
+    acts_as_value_object
   end
 end
