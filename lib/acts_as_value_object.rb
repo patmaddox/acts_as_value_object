@@ -1,4 +1,6 @@
 require 'digest/md5'
+file = File.dirname(__FILE__)
+require "#{file}/ext/active_record/belongs_to_association"
 
 module ActsAsValueObject
   module ClassMethods
