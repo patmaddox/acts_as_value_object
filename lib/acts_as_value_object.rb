@@ -4,7 +4,7 @@ module ActsAsValueObject
   module ClassMethods
     def acts_as_value_object
       include ActsAsValueObject::InstanceMethods
-      before_validation_on_create :set_md5
+      before_save :set_md5
       before_save :load_from_existing
     end
   end
@@ -19,6 +19,9 @@ module ActsAsValueObject
       if existing = self.class.find_by_md5(to_md5)
         @new_record = false
         self.id = existing.id
+      else
+        @new_record = true
+        self.id = nil
       end
     end
 

@@ -19,4 +19,9 @@ describe "acts_as_value_object" do
     Chicken.count.should == 1
     first.should == second
   end
+
+  it "should create a new record when it's updated" do
+    c = Chicken.create!(:name => "Bob", :age => 11)
+    lambda { c.update_attribute :name, "Joe" }.should change(Chicken, :count).by(1)
+  end
 end
