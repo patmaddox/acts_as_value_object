@@ -1,27 +1,27 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
 describe "acts_as_value_object" do
-  class Chicken < ActiveRecord::Base
+  class Email < ActiveRecord::Base
     acts_as_value_object
   end
 
   it "should define == to check for attributes" do
-    Chicken.new(:name => "Bob", :age => 11).should ==
-      Chicken.new(:name => "Bob", :age => 11)
+    Email.new(:address => "bob@example.com", :system_id => 11).should ==
+      Email.new(:address => "bob@example.com", :system_id => 11)
 
-    Chicken.new(:name => "Joe", :age => 11).should_not ==
-      Chicken.new(:name => "Bob", :age => 11)
+    Email.new(:address => "joe@example.com", :system_id => 11).should_not ==
+      Email.new(:address => "bob@example.com", :system_id => 11)
   end
 
   it "should only create one record with the attributes" do
-    first = Chicken.create!(:name => "Bob", :age => 11)
-    second = Chicken.create!(:name => "Bob", :age => 11)
-    Chicken.count.should == 1
+    first = Email.create!(:address => "bob@example.com", :system_id => 11)
+    second = Email.create!(:address => "bob@example.com", :system_id => 11)
+    Email.count.should == 1
     first.should == second
   end
 
   it "should create a new record when it's updated" do
-    c = Chicken.create!(:name => "Bob", :age => 11)
-    lambda { c.update_attribute :name, "Joe" }.should change(Chicken, :count).by(1)
+    c = Email.create!(:address => "bob@example.com", :system_id => 11)
+    lambda { c.update_attribute :address, "joe@example.com" }.should change(Email, :count).by(1)
   end
 end
