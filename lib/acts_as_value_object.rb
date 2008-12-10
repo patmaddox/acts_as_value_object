@@ -12,7 +12,7 @@ module ActsAsValueObject
   module InstanceMethods
     def ==(other)
       self.class == other.class &&
-        self.attributes == other.attributes
+        self.comparable_attributes == other.comparable_attributes
     end
 
     def load_from_existing
@@ -25,11 +25,15 @@ module ActsAsValueObject
       end
     end
 
+    def comparable_attributes
+      comparable_attrs = attributes.clone
+      comparable_attrs.delete "md5"
+      comparable_attrs.delete "id"
+      comparable_attrs
+    end
+
     def to_md5
-      hashable_attrs = attributes.clone
-      hashable_attrs.delete "md5"
-      hashable_attrs.delete "id"
-      Digest::MD5.hexdigest(hashable_attrs.to_s)
+      Digest::MD5.hexdigest(comparable_attributes.to_s)
     end
 
     private

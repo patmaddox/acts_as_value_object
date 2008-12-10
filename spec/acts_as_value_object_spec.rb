@@ -13,6 +13,11 @@ describe "acts_as_value_object" do
       Email.new(:address => "bob@example.com", :system_id => 11)
   end
 
+  it "should know that unsaved records are equal to saved records with the same attrs" do
+    Email.create!(:address => "bob@example.com", :system_id => 11).should ==
+      Email.new(:address => "bob@example.com", :system_id => 11)
+  end
+
   it "should only create one record with the attributes" do
     first = Email.create!(:address => "bob@example.com", :system_id => 11)
     second = Email.create!(:address => "bob@example.com", :system_id => 11)
